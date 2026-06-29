@@ -19,7 +19,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'simpan') {
 
         // validasi server-side: cuma nama & pesan yang wajib
         if ($nama == '' || $pesan == '') {
-            header("Location: ../views/contact.php?status=error");
+            header("Location: ../index.php?status=error#contact");
             exit();
         }
 
@@ -28,10 +28,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'simpan') {
         $kota = ($kota != '') ? $kota : null;
 
         if ($bukuTamuModel->simpan($nama, $email, $kota, $pesan)) {
-            header("Location: ../views/contact.php?status=success");
+            header("Location: ../index.php?status=success#contact");
             exit();
         } else {
-            header("Location: ../views/contact.php?status=error");
+            header("Location: ../index.php?status=error#contact");
             exit();
         }
     }

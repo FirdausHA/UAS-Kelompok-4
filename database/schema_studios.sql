@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS studios (
     luas_area VARCHAR(50) DEFAULT NULL,
     rating DECIMAL(2,1) DEFAULT 5.0,
     is_populer TINYINT(1) DEFAULT 0,
+    status ENUM('available', 'booked') NOT NULL DEFAULT 'available',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
