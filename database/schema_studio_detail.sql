@@ -1,5 +1,3 @@
--- Opsional: kolom tambahan untuk halaman detail studio
--- Jalankan sekali di phpMyAdmin (abaikan error jika kolom sudah ada)
 
 ALTER TABLE studios
     ADD COLUMN max_kapasitas VARCHAR(50) DEFAULT NULL AFTER luas_area;

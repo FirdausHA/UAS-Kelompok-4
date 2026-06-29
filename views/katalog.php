@@ -44,11 +44,6 @@ include $base_path . 'includes/header.php';
         </div>
 
         <?php include $base_path . 'includes/partials/studio-grid.php'; ?>
-
-        <div class="katalog-page-meta animate-on-load" data-animate="fade-up" data-delay="150">
-            <p class="text-muted">Menampilkan <?= count($daftarStudio) ?> studio tersedia</p>
-            <a href="<?= $base_path ?>index.php#katalog" class="link-arrow">&larr; Kembali ke Beranda</a>
-        </div>
     </div>
 </section>
 

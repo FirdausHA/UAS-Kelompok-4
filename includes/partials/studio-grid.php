@@ -1,7 +1,4 @@
 <?php
-/**
- * Partial grid studio — butuh variabel $daftarStudio dan function formatHarga()
- */
 if (!isset($daftarStudio)) {
     $daftarStudio = [];
 }
