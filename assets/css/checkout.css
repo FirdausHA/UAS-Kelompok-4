@@ -1,0 +1,431 @@
+/* =============================================
+   Halaman Checkout / Pembayaran
+   ============================================= */
+
+.checkout-page {
+    padding: 40px 0 80px;
+    min-height: calc(100vh - 80px);
+}
+
+.checkout-header {
+    margin-bottom: 40px;
+}
+
+.checkout-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+}
+
+.checkout-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.checkout-alert {
+    margin-bottom: 32px;
+}
+
+/* --- Top grid: summary + sidebar --- */
+.checkout-top-grid {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+@media (min-width: 1024px) {
+    .checkout-top-grid {
+        grid-template-columns: 1fr 320px;
+        align-items: start;
+    }
+}
+
+.checkout-summary-card {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+@media (max-width: 768px) {
+    .checkout-summary-card {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summary-thumb {
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--border);
+}
+
+.summary-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.summary-studio {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.summary-meta {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.summary-meta li {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.meta-label {
+    color: var(--text-dim);
+    min-width: 70px;
+}
+
+.summary-total-wrap {
+    text-align: right;
+    align-self: center;
+}
+
+@media (max-width: 768px) {
+    .summary-total-wrap {
+        text-align: left;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+    }
+}
+
+.summary-total-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+}
+
+.summary-total-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #A65D43;
+    letter-spacing: -0.02em;
+}
+
+/* --- Sidebar --- */
+.checkout-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.sidebar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.sidebar-secure,
+.sidebar-support {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.sidebar-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-variant);
+    border-radius: var(--radius);
+    color: var(--primary);
+}
+
+.sidebar-card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.sidebar-card p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.map-placeholder {
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    aspect-ratio: 16 / 9;
+}
+
+.map-placeholder iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(30%) contrast(1.1);
+}
+
+.map-address {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* --- Payment grid --- */
+.checkout-payment-grid {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+    .checkout-payment-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.payment-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+}
+
+.payment-card-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.payment-method:hover {
+    border-color: var(--border-variant);
+}
+
+.payment-method.is-selected {
+    border-color: #A65D43;
+    background: rgba(166, 93, 67, 0.08);
+    color: var(--text);
+}
+
+.payment-method input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-radio {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.payment-method.is-selected .payment-radio {
+    border-color: #A65D43;
+}
+
+.payment-method.is-selected .payment-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: #A65D43;
+    border-radius: 50%;
+}
+
+.bank-info {
+    margin-bottom: 20px;
+}
+
+.bank-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.bank-row:last-child {
+    border-bottom: none;
+}
+
+.bank-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.bank-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.bank-account {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-copy {
+    padding: 4px 12px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    background: transparent;
+    border: 1px solid var(--border-variant);
+    border-radius: var(--radius);
+    color: var(--primary);
+    cursor: pointer;
+    font-family: var(--font-utama);
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-copy:hover {
+    border-color: #A65D43;
+    color: #A65D43;
+}
+
+.bank-instructions {
+    padding-left: 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.bank-instructions strong {
+    color: #A65D43;
+}
+
+.ewallet-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+/* --- Upload & confirm --- */
+.checkout-confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s;
+    background: var(--surface);
+}
+
+.upload-zone:hover,
+.upload-zone.is-dragover {
+    border-color: #A65D43;
+    background: rgba(166, 93, 67, 0.05);
+}
+
+.upload-zone.has-file {
+    border-color: rgba(40, 167, 69, 0.5);
+    background: rgba(40, 167, 69, 0.05);
+}
+
+.upload-icon {
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+.upload-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.upload-hint {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.upload-filename {
+    margin-top: 12px;
+    font-size: 0.875rem;
+    color: var(--sukses-text);
+    font-weight: 500;
+}
+
+.btn-confirm {
+    width: 100%;
+    padding: 18px 32px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #A65D43;
+    border: none;
+    border-radius: var(--radius);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    animation: none;
+}
+
+.btn-confirm:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+.checkout-success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 24px 0;
+}

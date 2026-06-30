@@ -1,0 +1,412 @@
+/* =============================================
+   Halaman Detail Katalog Studio
+   ============================================= */
+
+.detail-page {
+    padding: 40px 0 80px;
+    min-height: calc(100vh - 80px);
+}
+
+.detail-layout {
+    display: grid;
+    gap: 48px;
+    align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .detail-layout {
+        grid-template-columns: 1fr 380px;
+        gap: 56px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .detail-layout {
+        grid-template-columns: 1fr 420px;
+    }
+}
+
+/* --- Kolom kiri --- */
+.detail-hero-img {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    aspect-ratio: 16 / 10;
+}
+
+.detail-hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.detail-hero-img:hover img {
+    transform: scale(1.03);
+}
+
+.detail-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+    .detail-title {
+        font-size: 2.5rem;
+    }
+}
+
+.detail-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.detail-spec {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.detail-spec svg {
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+.detail-desc {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    max-width: 720px;
+}
+
+.detail-amenities {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 600px) {
+    .detail-amenities {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.amenity-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: border-color 0.25s, transform 0.25s;
+}
+
+.amenity-box:hover {
+    border-color: var(--border-variant);
+    transform: translateY(-2px);
+}
+
+.amenity-box svg {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+/* --- Booking sidebar --- */
+.detail-booking {
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .detail-booking {
+        position: sticky;
+        top: 100px;
+    }
+}
+
+.booking-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+}
+
+.booking-section {
+    margin-bottom: 28px;
+}
+
+.booking-section-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+/* --- Kalender --- */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.calendar-month {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.calendar-nav {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.calendar-nav:hover {
+    border-color: var(--primary-hover);
+    color: var(--primary-hover);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.calendar-weekdays span {
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding: 4px 0;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    font-family: var(--font-utama);
+}
+
+.cal-day:hover:not(.is-disabled):not(.cal-day-empty) {
+    background: rgba(255, 180, 163, 0.1);
+    color: var(--text);
+}
+
+.cal-day.is-selected {
+    background: #A5452E;
+    color: #fff;
+    font-weight: 600;
+}
+
+.cal-day.is-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.cal-day-empty {
+    cursor: default;
+}
+
+/* --- Slot waktu --- */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.time-slot {
+    padding: 10px 4px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font-utama);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.time-slot:hover {
+    border-color: var(--border-variant);
+    color: var(--text);
+}
+
+.time-slot.is-selected {
+    background: #A5452E;
+    border-color: #A5452E;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* --- Add-on packages --- */
+.addon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.addon-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.addon-item:hover {
+    border-color: var(--border-variant);
+}
+
+.addon-item.is-selected {
+    border-color: #A5452E;
+    background: rgba(165, 69, 46, 0.08);
+}
+
+.addon-item input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.addon-radio {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.2s;
+}
+
+.addon-item.is-selected .addon-radio {
+    border-color: #A5452E;
+}
+
+.addon-item.is-selected .addon-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: #A5452E;
+    border-radius: 50%;
+}
+
+.addon-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    gap: 12px;
+}
+
+.addon-name {
+    font-size: 0.875rem;
+    color: var(--text);
+}
+
+.addon-price {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+}
+
+/* --- Total & pembayaran --- */
+.booking-total {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.booking-total-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+}
+
+.booking-total-price {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    transition: transform 0.3s ease;
+}
+
+.booking-total-price.is-updated {
+    animation: price-pop 0.35s ease;
+}
+
+@keyframes price-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); color: var(--primary); }
+    100% { transform: scale(1); }
+}
+
+.booking-total-vat {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+
+.btn-payment {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    animation: none;
+}
+
+.btn-payment:hover {
+    transform: none;
+    background-color: var(--primary-hover);
+}
