@@ -5,6 +5,10 @@ $base_path = '../';
 
 require_once $base_path . 'config/database.php';
 require_once $base_path . 'models/Studio.php';
+<<<<<<< HEAD
+=======
+require_once $base_path . 'includes/helpers.php';
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 $database = new Database();
 $db = $database->getConnection();
@@ -44,6 +48,14 @@ include $base_path . 'includes/header.php';
         </div>
 
         <?php include $base_path . 'includes/partials/studio-grid.php'; ?>
+<<<<<<< HEAD
+=======
+
+        <div class="katalog-page-meta animate-on-load" data-animate="fade-up" data-delay="150">
+            <p class="text-muted">Menampilkan <?= count($daftarStudio) ?> studio tersedia</p>
+            <a href="<?= $base_path ?>index.php#katalog" class="link-arrow">&larr; Kembali ke Beranda</a>
+        </div>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
     </div>
 </section>
 

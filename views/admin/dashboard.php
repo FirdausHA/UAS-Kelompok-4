@@ -6,6 +6,10 @@ require_once '../../models/Studio.php';
 require_once '../../models/User.php';
 require_once '../../models/Order.php';
 require_once '../../includes/auth_guard.php';
+<<<<<<< HEAD
+=======
+require_once '../../includes/helpers.php';
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 requireAdmin();
 
@@ -15,6 +19,7 @@ $studioModel = new Studio($db);
 $userModel = new User($db);
 $orderModel = new Order($db);
 
+<<<<<<< HEAD
 $daftarStudio = $studioModel->getAll();
 $totalStudios = $studioModel->countAll();
 
@@ -34,6 +39,34 @@ function formatHargaAdmin($angka) {
     }
     return 'Rp ' . number_format($angka, 0, ',', '.');
 }
+=======
+$totalStudios = $studioModel->countAll();
+
+$ordersToday = 0;
+$todayRevenue = 0;
+try {
+    $ordersToday = $orderModel->countToday();
+    $todayRevenue = $orderModel->sumTodayRevenue();
+    $dailyData = $orderModel->getDailyChartData();
+    $weeklyData = $orderModel->getWeeklyChartData();
+    $monthlyData = $orderModel->getMonthlyChartData();
+} catch (Exception $e) {
+    $ordersToday = 0;
+    $todayRevenue = 0;
+    $dailyData = [];
+    $weeklyData = [];
+    $monthlyData = [];
+}
+
+// Prepare JSON data for charts
+$chartData = [
+    'daily' => $dailyData,
+    'weekly' => $weeklyData,
+    'monthly' => $monthlyData
+];
+
+
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 $page_title = 'Studio Intelligence | Admin';
 $admin_page = 'dashboard';
@@ -93,13 +126,20 @@ include '../../includes/admin/header.php';
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
         <div>
+<<<<<<< HEAD
             <p class="metric-label">Monthly Revenue</p>
             <p class="metric-value"><?= formatHargaAdmin($monthlyRevenue) ?></p>
             <p class="metric-trend metric-trend-up">15% above target</p>
+=======
+            <p class="metric-label">Total Revenue Today</p>
+            <p class="metric-value"><?= formatRupiah($todayRevenue) ?></p>
+            <p class="metric-trend metric-trend-up">Real-time income</p>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
         </div>
     </div>
 </section>
 
+<<<<<<< HEAD
 <section class="admin-inventory" id="inventory">
     <div class="inventory-header">
         <h2 class="inventory-title">Studio Inventory</h2>
@@ -240,5 +280,147 @@ include '../../includes/admin/header.php';
         </form>
     </div>
 </div>
+=======
+<section class="admin-inventory" style="margin-top: 32px;">
+    <div class="inventory-header">
+        <h2 class="inventory-title">Grafik Penjualan</h2>
+        <div class="admin-toolbar">
+            <select id="chartPeriod" class="admin-select admin-select-sm">
+                <option value="daily">Harian (7 hari)</option>
+                <option value="weekly">Mingguan (12 minggu)</option>
+                <option value="monthly">Bulanan (12 bulan)</option>
+            </select>
+        </div>
+    </div>
+    <div class="chart-container">
+        <canvas id="salesChart" height="300"></canvas>
+    </div>
+</section>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const chartData = <?php echo json_encode($chartData); ?>;
+let currentChart = null;
+
+function formatDate(dateStr, type) {
+    if (type === 'daily') {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
+    }
+    if (type === 'weekly') {
+        const d = new Date(dateStr);
+        return 'Minggu ' + d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
+    }
+    if (type === 'monthly') {
+        const [year, month] = dateStr.split('-');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+        return monthNames[parseInt(month)-1] + ' ' + year;
+    }
+    return dateStr;
+}
+
+function renderChart(period) {
+    let labels = [];
+    let orderData = [];
+    let revenueData = [];
+
+    if (period === 'daily') {
+        chartData.daily.forEach(item => {
+            labels.push(formatDate(item.date, 'daily'));
+            orderData.push(item.orders);
+            revenueData.push(item.revenue);
+        });
+    } else if (period === 'weekly') {
+        chartData.weekly.forEach(item => {
+            labels.push(formatDate(item.date, 'weekly'));
+            orderData.push(item.orders);
+            revenueData.push(item.revenue);
+        });
+    } else if (period === 'monthly') {
+        chartData.monthly.forEach(item => {
+            labels.push(formatDate(item.month, 'monthly'));
+            orderData.push(item.orders);
+            revenueData.push(item.revenue);
+        });
+    }
+
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    
+    if (currentChart) {
+        currentChart.destroy();
+    }
+
+    currentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Jumlah Order',
+                    data: orderData,
+                    borderColor: '#a3492f',
+                    backgroundColor: 'rgba(163, 73, 47, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Total Pendapatan (Rp)',
+                    data: revenueData,
+                    borderColor: '#6fcf97',
+                    backgroundColor: 'rgba(111, 207, 151, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: { color: '#e8e1dc' }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#948e89' }
+                },
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#948e89' }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    grid: { drawOnChartArea: false },
+                    ticks: { 
+                        color: '#948e89',
+                        callback: function(value) {
+                            return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+document.getElementById('chartPeriod').addEventListener('change', (e) => {
+    renderChart(e.target.value);
+});
+
+// Initialize chart
+renderChart('daily');
+</script>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 <?php include '../../includes/admin/footer.php'; ?>

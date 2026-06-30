@@ -282,6 +282,30 @@
     color: #fff;
 }
 
+<<<<<<< HEAD
+=======
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    border-color: #a3492f;
+}
+
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 .admin-table .table-thumb {
     width: 48px;
     height: 36px;
@@ -302,6 +326,7 @@
 }
 
 .btn-icon {
+<<<<<<< HEAD
     width: 34px;
     height: 34px;
     display: inline-flex;
@@ -323,6 +348,77 @@
 .btn-delete:hover {
     border-color: #e74c6f;
     color: #e74c6f;
+=======
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s, transform 0.1s;
+    text-decoration: none;
+    position: relative;
+}
+
+.btn-icon:active {
+    transform: scale(0.93);
+}
+
+/* Tooltip via title attribute styling */
+.btn-icon[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1614;
+    border: 1px solid #2a2220;
+    color: #e8e1dc;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.btn-detail {
+    color: #4eaaee;
+    border: 1.5px solid rgba(78, 170, 238, 0.35);
+    background: rgba(78, 170, 238, 0.1);
+}
+
+.btn-detail:hover {
+    background: rgba(78, 170, 238, 0.22);
+    border-color: #4eaaee;
+    color: #7dc4f8;
+}
+
+.btn-edit {
+    color: #e8b84b;
+    border: 1.5px solid rgba(232, 184, 75, 0.35);
+    background: rgba(232, 184, 75, 0.1);
+}
+
+.btn-edit:hover {
+    background: rgba(232, 184, 75, 0.22);
+    border-color: #e8b84b;
+    color: #f5d070;
+}
+
+.btn-delete {
+    color: #e05471;
+    border: 1.5px solid rgba(224, 84, 113, 0.35);
+    background: rgba(224, 84, 113, 0.1);
+}
+
+.btn-delete:hover {
+    background: rgba(224, 84, 113, 0.22);
+    border-color: #e05471;
+    color: #f07090;
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 }
 
 .badge-available {
@@ -520,6 +616,20 @@
     color: var(--primary);
 }
 
+<<<<<<< HEAD
+=======
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.status-available {
+    background: rgba(40, 167, 69, 0.15);
+    color: #6fcf97;
+}
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 .badge-order-pending { background: rgba(242,97,63,0.15); color: var(--primary-hover); }
 .badge-order-confirmed { background: rgba(40,167,69,0.15); color: #6fcf97; }
 .badge-order-completed { background: rgba(163,73,47,0.2); color: #d4a088; }
@@ -528,3 +638,215 @@
 .status-form {
     margin: 0;
 }
+<<<<<<< HEAD
+=======
+
+/* Studio Detail */
+.studio-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+@media (max-width: 900px) {
+    .studio-detail {
+        grid-template-columns: 1fr;
+    }
+}
+
+.studio-detail-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.studio-detail-img-wrapper {
+    width: 100%;
+}
+
+.studio-detail-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+
+.studio-detail-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.studio-detail-info h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+}
+
+.studio-detail-field {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+}
+
+.studio-detail-field-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(163, 73, 47, 0.12);
+    color: #a3492f;
+    border-radius: var(--radius);
+    flex-shrink: 0;
+}
+
+.studio-detail-field-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.studio-detail-field-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.studio-detail-field-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.studio-detail-section {
+    margin-top: 24px;
+}
+
+.studio-detail-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.studio-detail-desc {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.studio-detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.studio-detail-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-container {
+    padding: 16px 0;
+}
+
+/* Form Styles */
+.form-hint {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Improved Admin Table (Studio Inventory) --- */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 16px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(42, 34, 32, 0.7);
+    font-size: 0.875rem;
+    vertical-align: middle;
+}
+
+.admin-table th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.admin-table thead tr {
+    border-bottom: 2px solid #2a2220;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.table-studio-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.table-price {
+    color: #c96a3d;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.table-footer {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #2a2220;
+}
+
+.table-thumb {
+    width: 52px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #2a2220;
+    display: block;
+}
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a

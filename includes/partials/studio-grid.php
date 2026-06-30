@@ -1,4 +1,10 @@
 <?php
+<<<<<<< HEAD
+=======
+/**
+ * Partial grid studio — butuh variabel $daftarStudio dan function formatHarga()
+ */
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 if (!isset($daftarStudio)) {
     $daftarStudio = [];
 }
@@ -20,12 +26,21 @@ if (!isset($daftarStudio)) {
         data-studio="<?= htmlspecialchars($studio['nama']) ?>"
     >
         <div class="card-img-wrap">
+<<<<<<< HEAD
             <img
                 src="<?= htmlspecialchars($studio['gambar']) ?>"
                 alt="<?= htmlspecialchars($studio['nama']) ?>"
                 class="card-img"
                 loading="lazy"
             >
+=======
+                <img
+                    src="<?= htmlspecialchars(getStudioImageUrl($studio['gambar'])) ?>"
+                    alt="<?= htmlspecialchars($studio['nama']) ?>"
+                    class="card-img"
+                    loading="lazy"
+                >
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
             <?php if (!empty($studio['is_populer'])): ?>
             <span class="card-badge">Populer</span>
             <?php endif; ?>

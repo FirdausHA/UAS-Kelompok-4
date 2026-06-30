@@ -50,3 +50,41 @@ function userInitials($name) {
     }
     return $initials ?: 'U';
 }
+<<<<<<< HEAD
+=======
+
+function getBasePath() {
+    $script = $_SERVER['SCRIPT_NAME'];
+    $depth = substr_count($script, '/') - 1;
+    $base = '';
+    for ($i = 0; $i < $depth; $i++) {
+        $base .= '../';
+    }
+    return $base;
+}
+
+function getStudioImageUrl($imagePath) {
+    if (empty($imagePath)) {
+        return '';
+    }
+    // If it's already a full URL, return it
+    if (strpos($imagePath, 'http://') === 0 || strpos($imagePath, 'https://') === 0) {
+        return $imagePath;
+    }
+    // Strip leading slashes
+    $imagePath = ltrim($imagePath, '/\\');
+    // Build absolute URL from project root folder
+    // e.g. SCRIPT_NAME = /UAS-Kelompok-04/views/admin/studios.php
+    // => projectRoot  = /UAS-Kelompok-04/
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    $segments = explode('/', trim($scriptName, '/'));
+    $projectRoot = (count($segments) > 1) ? '/' . $segments[0] . '/' : '/';
+    return $projectRoot . $imagePath;
+}
+
+function getUserById($db, $user_id) {
+    $stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a

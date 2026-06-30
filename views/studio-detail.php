@@ -6,6 +6,10 @@ $base_path = '../';
 require_once $base_path . 'config/database.php';
 require_once $base_path . 'models/Studio.php';
 require_once $base_path . 'includes/auth_guard.php';
+<<<<<<< HEAD
+=======
+require_once $base_path . 'includes/helpers.php';
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
@@ -96,7 +100,11 @@ include $base_path . 'includes/header.php';
         <div class="detail-main animate-on-load" data-animate="fade-up">
             <div class="detail-hero-img">
                 <img
+<<<<<<< HEAD
                     src="<?= htmlspecialchars($studio['gambar']) ?>"
+=======
+                    src="<?= htmlspecialchars(getStudioImageUrl($studio['gambar'])) ?>"
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
                     alt="<?= htmlspecialchars($studio['nama']) ?>"
                 >
             </div>

@@ -4,6 +4,10 @@ session_start();
 $base_path = '../';
 
 require_once $base_path . 'config/database.php';
+<<<<<<< HEAD
+=======
+require_once $base_path . 'config/midtrans.php';
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 require_once $base_path . 'models/Studio.php';
 require_once $base_path . 'models/Order.php';
 require_once $base_path . 'includes/auth_guard.php';
@@ -199,6 +203,7 @@ include $base_path . 'includes/header.php';
                 <h3 class="payment-card-title">Payment Method</h3>
                 <div class="payment-methods" id="paymentMethods">
                     <label class="payment-method is-selected">
+<<<<<<< HEAD
                         <input type="radio" name="payment_method" value="bank" checked>
                         <span class="payment-radio"></span>
                         <span>Bank Transfer (BCA, Mandiri, BNI)</span>
@@ -207,11 +212,35 @@ include $base_path . 'includes/header.php';
                         <input type="radio" name="payment_method" value="ewallet">
                         <span class="payment-radio"></span>
                         <span>E-Wallet (GoPay, OVO, ShopeePay)</span>
+=======
+                        <input type="radio" name="payment_method" value="midtrans" checked>
+                        <span class="payment-radio"></span>
+                        <span>Midtrans (All Payment Methods: Transfer, E-Wallet, QRIS)</span>
+                    </label>
+                    <label class="payment-method">
+                        <input type="radio" name="payment_method" value="manual">
+                        <span class="payment-radio"></span>
+                        <span>Manual Transfer (Bank)</span>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
                     </label>
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="payment-card" id="bankDetails">
+=======
+            <!-- Midtrans Section -->
+            <div class="payment-card" id="midtransDetails">
+                <h3 class="payment-card-title">Bayar via Midtrans</h3>
+                <p class="midtrans-desc">Klik tombol di bawah untuk membuka halaman pembayaran Midtrans. Anda bisa memilih berbagai metode pembayaran: Transfer Bank, E-Wallet, QRIS, dll.</p>
+                <button type="button" class="btn btn-cta btn-midtrans" id="btnMidtransPay">
+                    Bayar Sekarang
+                </button>
+            </div>
+
+            <!-- Manual Transfer Section -->
+            <div class="payment-card" id="manualDetails" hidden>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
                 <h3 class="payment-card-title">Transfer Details</h3>
                 <div class="bank-info">
                     <div class="bank-row">
@@ -236,6 +265,7 @@ include $base_path . 'includes/header.php';
                     <li>Upload bukti pembayaran di bawah, lalu klik Konfirmasi Pembayaran.</li>
                 </ol>
             </div>
+<<<<<<< HEAD
 
             <div class="payment-card payment-card-ewallet" id="ewalletDetails" hidden>
                 <h3 class="payment-card-title">E-Wallet Details</h3>
@@ -287,6 +317,15 @@ include $base_path . 'includes/header.php';
                 Konfirmasi Pembayaran
             </button>
         </form>
+=======
+        </div>
+
+        </div>
+        <!-- End Manual Upload Section -->
+
+        <!-- Success Section (for both payment methods) -->
+        <?php if ($status !== 'success'): ?>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
         <?php else: ?>
         <div class="checkout-success-actions animate-on-load" data-animate="fade-up">
             <a href="<?= $base_path ?>views/pelanggan/riwayat.php" class="btn btn-primary">Lihat Riwayat Transaksi</a>
@@ -297,4 +336,147 @@ include $base_path . 'includes/header.php';
     </div>
 </main>
 
+<<<<<<< HEAD
+=======
+<!-- Midtrans Snap JS -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?= htmlspecialchars(MIDTRANS_CLIENT_KEY) ?>"></script>
+
+<script>
+// Checkout page JS
+document.addEventListener('DOMContentLoaded', function() {
+    const orderDbId = <?= (int) $order_db_id ?>;
+    const basePath = '<?= $base_path ?>';
+    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    const midtransDetails = document.getElementById('midtransDetails');
+    const manualDetails = document.getElementById('manualDetails');
+    const manualUploadSection = document.getElementById('manualUploadSection');
+    const btnMidtransPay = document.getElementById('btnMidtransPay');
+
+    // Show/hide payment method sections
+    paymentMethods.forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('is-selected'));
+            this.closest('.payment-method').classList.add('is-selected');
+
+            if (this.value === 'midtrans') {
+                midtransDetails.hidden = false;
+                manualDetails.hidden = true;
+                manualUploadSection.hidden = true;
+            } else {
+                midtransDetails.hidden = true;
+                manualDetails.hidden = false;
+                manualUploadSection.hidden = false;
+            }
+        });
+    });
+
+    // Handle Midtrans payment
+    if (btnMidtransPay) {
+        btnMidtransPay.addEventListener('click', async function() {
+            try {
+                btnMidtransPay.disabled = true;
+                btnMidtransPay.textContent = 'Loading...';
+
+                const response = await fetch(basePath + 'controllers/MidtransController.php?action=create-snap', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        'order_db_id': orderDbId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.snap_token) {
+                    snap.pay(data.snap_token, {
+                        onSuccess: function(result) {
+                            // Payment success, redirect to finish
+                            window.location.href = basePath + 'controllers/MidtransController.php?action=finish&order_id=' + result.order_id;
+                        },
+                        onPending: function(result) {
+                            // Payment pending, redirect to unfinish
+                            window.location.href = basePath + 'controllers/MidtransController.php?action=unfinish&order_id=' + result.order_id;
+                        },
+                        onError: function(result) {
+                            // Payment error, redirect to error
+                            window.location.href = basePath + 'controllers/MidtransController.php?action=error&order_id=' + result.order_id;
+                        },
+                        onClose: function() {
+                            btnMidtransPay.disabled = false;
+                            btnMidtransPay.textContent = 'Bayar Sekarang';
+                        }
+                    });
+                } else {
+                    alert('Gagal membuat transaksi. Silakan coba lagi.');
+                    btnMidtransPay.disabled = false;
+                    btnMidtransPay.textContent = 'Bayar Sekarang';
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+                btnMidtransPay.disabled = false;
+                btnMidtransPay.textContent = 'Bayar Sekarang';
+            }
+        });
+    }
+
+    // Existing checkout JS (for manual upload)
+    const uploadZone = document.getElementById('uploadZone');
+    const buktiInput = document.getElementById('buktiInput');
+    const uploadFilename = document.getElementById('uploadFilename');
+
+    if (uploadZone && buktiInput) {
+        uploadZone.addEventListener('click', () => buktiInput.click());
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('drag-over');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('drag-over');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) {
+                buktiInput.files = e.dataTransfer.files;
+                updateFilename();
+            }
+        });
+
+        buktiInput.addEventListener('change', updateFilename);
+    }
+
+    function updateFilename() {
+        if (!buktiInput || !uploadFilename) return;
+        if (buktiInput.files.length) {
+            uploadFilename.textContent = 'Selected: ' + buktiInput.files[0].name;
+            uploadFilename.hidden = false;
+        } else {
+            uploadFilename.hidden = true;
+        }
+    }
+
+    // Copy account number
+    const btnCopyAccount = document.getElementById('btnCopyAccount');
+    const accountNumber = document.getElementById('accountNumber');
+    if (btnCopyAccount && accountNumber) {
+        btnCopyAccount.addEventListener('click', () => {
+            navigator.clipboard.writeText(accountNumber.textContent.replace(/\s/g, '')).then(() => {
+                const originalText = btnCopyAccount.textContent;
+                btnCopyAccount.textContent = 'COPIED!';
+                setTimeout(() => {
+                    btnCopyAccount.textContent = originalText;
+                }, 1500);
+            });
+        });
+    }
+});
+</script>
+
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 <?php include $base_path . 'includes/footer.php'; ?>

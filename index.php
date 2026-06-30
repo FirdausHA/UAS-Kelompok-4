@@ -5,6 +5,10 @@ $base_path = '';
 
 require_once 'config/database.php';
 require_once 'models/Studio.php';
+<<<<<<< HEAD
+=======
+require_once 'includes/helpers.php';
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
 $database = new Database();
 $db = $database->getConnection();

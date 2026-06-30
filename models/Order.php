@@ -90,11 +90,31 @@ class Order {
         return $stmt->execute();
     }
 
+<<<<<<< HEAD
+=======
+    public function confirmMidtransPayment($id, $payment_method) {
+        $query = "UPDATE {$this->table} SET
+            payment_method = :method,
+            status = 'confirmed',
+            updated_at = NOW()
+            WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':method', $payment_method);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
     public function getByUser($user_id, $filter = 'all') {
         $sql = "SELECT o.*, s.nama AS studio_nama, s.gambar AS studio_gambar
                 FROM {$this->table} o
                 JOIN studios s ON s.id = o.studio_id
+<<<<<<< HEAD
                 WHERE o.user_id = :user_id AND o.bukti_file IS NOT NULL";
+=======
+                WHERE o.user_id = :user_id AND (o.bukti_file IS NOT NULL OR o.status IN ('pending', 'confirmed', 'completed', 'cancelled'))";
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
         if ($filter === 'berjalan') {
             $sql .= " AND o.status IN ('pending', 'confirmed')";
@@ -118,7 +138,11 @@ class Order {
                 FROM {$this->table} o
                 JOIN studios s ON s.id = o.studio_id
                 JOIN users u ON u.id = o.user_id
+<<<<<<< HEAD
                 WHERE o.bukti_file IS NOT NULL";
+=======
+                WHERE (o.bukti_file IS NOT NULL OR o.status IN ('pending', 'confirmed', 'completed', 'cancelled'))";
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 
         if ($search !== '') {
             $sql .= " AND (o.order_code LIKE :q OR u.nama_lengkap LIKE :q OR u.email LIKE :q OR s.nama LIKE :q)";
@@ -146,18 +170,78 @@ class Order {
     }
 
     public function countAll() {
+<<<<<<< HEAD
         $stmt = $this->conn->query("SELECT COUNT(*) AS total FROM {$this->table} WHERE bukti_file IS NOT NULL");
+=======
+        $stmt = $this->conn->query("SELECT COUNT(*) AS total FROM {$this->table} WHERE bukti_file IS NOT NULL OR status IN ('pending', 'confirmed', 'completed', 'cancelled')");
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
         return (int) ($stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0);
     }
 
     public function countToday() {
+<<<<<<< HEAD
         $stmt = $this->conn->query("SELECT COUNT(*) AS total FROM {$this->table} WHERE DATE(created_at) = CURDATE() AND bukti_file IS NOT NULL");
+=======
+        $stmt = $this->conn->query("SELECT COUNT(*) AS total FROM {$this->table} WHERE DATE(created_at) = CURDATE() AND (bukti_file IS NOT NULL OR status IN ('pending', 'confirmed', 'completed', 'cancelled'))");
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
         return (int) ($stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0);
     }
 
     public function sumMonthlyRevenue() {
         $stmt = $this->conn->query("SELECT COALESCE(SUM(total), 0) AS rev FROM {$this->table}
+<<<<<<< HEAD
             WHERE bukti_file IS NOT NULL AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())");
         return (int) ($stmt->fetch(PDO::FETCH_ASSOC)['rev'] ?? 0);
     }
+=======
+            WHERE (bukti_file IS NOT NULL OR status IN ('confirmed', 'completed')) AND MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())");
+        return (int) ($stmt->fetch(PDO::FETCH_ASSOC)['rev'] ?? 0);
+    }
+
+    public function sumTodayRevenue() {
+        $stmt = $this->conn->query("SELECT COALESCE(SUM(total), 0) AS rev FROM {$this->table}
+            WHERE (bukti_file IS NOT NULL OR status IN ('confirmed', 'completed')) AND DATE(created_at) = CURDATE()");
+        return (int) ($stmt->fetch(PDO::FETCH_ASSOC)['rev'] ?? 0);
+    }
+
+    public function getDailyChartData() {
+        $stmt = $this->conn->query("SELECT 
+            DATE(created_at) as date, 
+            COUNT(*) as orders, 
+            COALESCE(SUM(total),0) as revenue
+            FROM {$this->table} 
+            WHERE (bukti_file IS NOT NULL OR status IN ('confirmed', 'completed')) 
+            AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            GROUP BY DATE(created_at) 
+            ORDER BY DATE(created_at) ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getWeeklyChartData() {
+        $stmt = $this->conn->query("SELECT 
+            YEARWEEK(created_at, 1) as week, 
+            MIN(DATE(created_at)) as date, 
+            COUNT(*) as orders, 
+            COALESCE(SUM(total),0) as revenue
+            FROM {$this->table} 
+            WHERE (bukti_file IS NOT NULL OR status IN ('confirmed', 'completed')) 
+            AND created_at >= DATE_SUB(CURDATE(), INTERVAL 12 WEEK)
+            GROUP BY YEARWEEK(created_at,1)
+            ORDER BY week ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getMonthlyChartData() {
+        $stmt = $this->conn->query("SELECT 
+            DATE_FORMAT(created_at, '%Y-%m') as month, 
+            COUNT(*) as orders, 
+            COALESCE(SUM(total),0) as revenue
+            FROM {$this->table} 
+            WHERE (bukti_file IS NOT NULL OR status IN ('confirmed', 'completed')) 
+            AND created_at >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+            GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+            ORDER BY month ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 }

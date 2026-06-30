@@ -8,28 +8,11 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(150) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('admin', 'pelanggan') NOT NULL DEFAULT 'pelanggan',
-<<<<<<< HEAD
-=======
-    no_telepon VARCHAR(20) DEFAULT NULL,
-    alamat TEXT DEFAULT NULL,
-    status_akun ENUM('active', 'blocked') NOT NULL DEFAULT 'active',
->>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uk_users_username (username),
     UNIQUE KEY uk_users_email (email)
 );
 
-<<<<<<< HEAD
-=======
--- ============================================================
--- Jika tabel users SUDAH ADA, jalankan ALTER TABLE berikut
--- untuk menambah kolom yang kurang (skip jika sudah ada):
--- ============================================================
--- ALTER TABLE users ADD COLUMN no_telepon VARCHAR(20) DEFAULT NULL AFTER role;
--- ALTER TABLE users ADD COLUMN alamat TEXT DEFAULT NULL AFTER no_telepon;
--- ALTER TABLE users ADD COLUMN status_akun ENUM('active','blocked') NOT NULL DEFAULT 'active' AFTER alamat;
-
->>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
 -- Akun admin default
 -- Email: adminobsidian@gmail.com | Password: admin12345
 INSERT INTO users (nama_lengkap, username, email, password_hash, role) VALUES

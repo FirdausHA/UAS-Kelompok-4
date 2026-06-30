@@ -76,9 +76,13 @@ include $base_path . 'includes/pelanggan/layout-start.php';
                     <span class="riwayat-price-label">Total Biaya</span>
                     <span class="riwayat-price<?= $order['status'] === 'cancelled' ? ' is-cancelled' : '' ?>"><?= formatRupiah($order['total']) ?></span>
                 </div>
+<<<<<<< HEAD
                 <?php if ($isBerjalan): ?>
                 <a href="../checkout.php?order_db_id=<?= (int) $order['id'] ?>&studio_id=<?= (int) $order['studio_id'] ?>&tanggal=<?= urlencode($order['tanggal']) ?>&waktu=<?= urlencode($order['waktu']) ?>&addon_label=<?= urlencode($order['addon_label']) ?>&total=<?= (int) $order['total'] ?>" class="btn btn-outline btn-sm">Detail</a>
                 <?php endif; ?>
+=======
+                <a href="detail-order.php?id=<?= (int) $order['id'] ?>" class="btn btn-outline btn-sm">Detail Order</a>
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
             </div>
         </article>
         <?php endforeach; ?>

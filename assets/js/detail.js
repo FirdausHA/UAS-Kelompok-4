@@ -63,7 +63,11 @@
 
     function getEndHour(startHour) {
         const parts = startHour.split(':');
+<<<<<<< HEAD
         let h = parseInt(parts[0], 10) + 4;
+=======
+        let h = parseInt(parts[0], 10) + 1;
+>>>>>>> cac3d16ec6ccf1868c6d3ae6a9ea2567a7f69b0a
         if (h > 22) h = 22;
         return String(h).padStart(2, '0') + ':' + (parts[1] || '00');
     }
